@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim | Ayşenur Askerli</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">AA</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Hakkında</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ozgecmis.html">Özgeçmiş</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sehrim.html">Şehrim</a></li>
+                    <li class="nav-item"><a class="nav-link" href="mirasimiz.html">Mirasımız</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ilgi-alanlarim.html">İlgi Alanlarım</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="iletisim.html">İletişim</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5" id="app">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-lg border-0 rounded-4 p-4 p-md-5">
+                    <h2 class="fw-bold text-primary text-center mb-4">Bana Ulaşın</h2>
+                    
+                    <form id="contactForm" action="gonder.php" method="POST">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Adınız</label>
+                                <input type="text" name="ad" v-model="formData.ad" class="form-control rounded-pill" id="inputAd">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Soyadınız</label>
+                                <input type="text" name="soyad" v-model="formData.soyad" class="form-control rounded-pill" id="inputSoyad">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">E-posta</label>
+                                <input type="email" name="email" v-model="formData.email" class="form-control rounded-pill" id="inputEmail">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Telefon (Sadece Rakam)</label>
+                                <input type="text" name="tel" v-model="formData.tel" class="form-control rounded-pill" id="inputTel">
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Konu</label>
+                                <select name="konu" v-model="formData.konu" class="form-select rounded-pill" id="inputKonu">
+                                    <option value="">Seçiniz...</option>
+                                    <option value="is">İş Teklifi</option>
+                                    <option value="proje">Proje İşbirliği</option>
+                                    <option value="diger">Diğer</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <label class="form-label fw-bold d-block">Cinsiyet</label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="cinsiyet" value="kadin" v-model="formData.cinsiyet">
+                                    <label class="form-check-label">Kadın</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="cinsiyet" value="erkek" v-model="formData.cinsiyet">
+                                    <label class="form-check-label">Erkek</label>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Mesajınız</label>
+                                <textarea name="mesaj" v-model="formData.mesaj" class="form-control rounded-4" rows="4" id="inputMesaj"></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="kvkk" v-model="formData.kvkk" id="inputKVKK">
+                                    <label class="form-check-label small text-muted">KVKK verilerimin işlenmesini kabul ediyorum.</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <button type="button" onclick="validateNativeJS()" class="btn btn-secondary w-100 rounded-pill py-2 shadow-sm">
+                                    Native JS ile Denetle
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" @click="validateVueJS" class="btn btn-primary w-100 rounded-pill py-2 shadow-sm">
+                                    Vue.js ile Denetle & Gönder
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function validateNativeJS() {
+            const ad = document.getElementById('inputAd').value;
+            const email = document.getElementById('inputEmail').value;
+            const tel = document.getElementById('inputTel').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (ad === "" || email === "" || tel === "") {
+                alert("Native JS: Lütfen tüm zorunlu alanları doldurun!");
+                return false;
+            }
+            if (!emailRegex.test(email)) {
+                alert("Native JS: Geçersiz e-posta formatı!");
+                return false;
+            }
+            if (isNaN(tel)) {
+                alert("Native JS: Telefon sadece rakamlardan oluşmalıdır!");
+                return false;
+            }
+            alert("Native JS Kontrolü Başarılı!");
+        }
+    </script>
+
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    formData: {
+                        ad: '', soyad: '', email: '', tel: '', konu: '', cinsiyet: '', mesaj: '', kvkk: false
+                    }
+                }
+            },
+            methods: {
+                validateVueJS() {
+                    if (!this.formData.ad || !this.formData.email || !this.formData.kvkk) {
+                        alert("Vue.js: Eksik alan var veya KVKK onaylanmamış!");
+                        return;
+                    }
+                    if (this.formData.tel && isNaN(this.formData.tel)) {
+                        alert("Vue.js: Telefon sadece rakam olmalı!");
+                        return;
+                    }
+                    alert("Vue.js Denetimi Başarılı! Veriler gönderiliyor...");
+                    document.getElementById('contactForm').submit();
+                }
+            }
+        }).mount('#app');
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
