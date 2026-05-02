@@ -1,0 +1,27 @@
+/* Arka plan ve yazı tipi */
+body {
+    background: #fdf6ff; /* Çok hafif morumsu arka plan */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Rengarenk Navbar */
+.navbar {
+    background: linear-gradient(135deg, #8e2de2, #4a00e0) !important; /* Mor ve Mavi geçişli */
+    padding: 15px 0;
+}
+
+/* Kartlar ve Bölümler */
+.custom-container {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Resimlerin Tam Görünmesi İçin */
+.carousel-item img {
+    height: 550px;
+    object-fit: cover;
+    border-radius: 15px;
+}
